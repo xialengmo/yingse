@@ -1,0 +1,12 @@
+# Local media, jobs, settings, imported LUTs and temporary files
+.runtime/
+exports/
+__pycache__/
+*.py[cod]
+
+# User-provided or downloaded dependencies
+tools/*.exe
+tools/*.dll
+tools/LICENSE
+tools/README.txt
+Action4_DLogM_Rec709.cube

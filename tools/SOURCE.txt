@@ -1,0 +1,8 @@
+FFmpeg 8.0.1 essentials Windows build by Gyan Doshi
+Verified compatible with the installed NVIDIA driver.
+Distributor: https://www.gyan.dev/ffmpeg/builds/
+Release: https://github.com/GyanD/codexffmpeg/releases/tag/8.0.1
+Archive: ffmpeg-8.0.1-essentials_build.7z
+Archive SHA256: a0c715acca3839bfd203e600a7775b83cfe3ff928a4eceb9ca54f2982365901c
+FFmpeg source: https://ffmpeg.org/releases/ffmpeg-8.0.1.tar.xz
+License: GPL version 3 or later; see LICENSE.

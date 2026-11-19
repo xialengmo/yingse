@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="workspace-token" content="__SESSION_TOKEN__">
+  <title>映色 · 本地色彩工作台</title>
+  <link rel="stylesheet" href="/style.css"><script defer src="/browser-output.js"></script><script defer src="/app.js"></script>
+</head>
+<body>
+<svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10H3Z"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></symbol>
+<symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4m-4 6h4m10-6h4m-4 6h4"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+<symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h4m4 0h8M4 17h8m4 0h4"/><circle cx="10" cy="7" r="2"/><circle cx="14" cy="17" r="2"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5"/></symbol>
+<symbol id="i-compare" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 2v20M6 12h3m6 0h3"/></symbol>
+<symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-1 .6-1.5 1-1.5 2M12 16v.1"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="m15 4 5 5M4 20l5-1L20 8a2 2 0 0 0-5-5L4 15Z"/></symbol>
+<symbol id="i-retry" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 5 7 7-7 7"/></symbol>
+</defs></svg>
+
+<header class="app-header">
+  <div class="brand"><span class="brand-mark"><i></i><i></i><i></i></span><strong>映色</strong><span class="brand-en">COLOR STUDIO</span></div>
+  <div class="header-divider"></div><span class="workspace-title">本地色彩工作台</span>
+  <div class="header-right"><button id="open-queue" class="queue-launch" aria-label="打开处理队列"><svg><use href="#i-clock"/></svg><span>处理队列</span><span id="queue-badge" class="count" hidden>0</span></button><span id="connection" class="connection"><i></i>正在连接</span><button id="help-button" class="icon-button" aria-label="使用说明"><svg><use href="#i-help"/></svg></button><button id="settings-button" class="icon-button" aria-label="工作台设置"><svg><use href="#i-sliders"/></svg></button></div>
+</header>
+<div id="engine-banner" class="engine-banner" hidden></div>
+
+<main class="main-layout">
+  <aside class="library panel">
+    <div class="panel-heading"><h1>素材库 <span id="media-count" class="count">0</span></h1><button class="icon-button" id="path-button" title="输入本地路径" aria-label="输入本地路径"><svg><use href="#i-more"/></svg></button></div>
+    <div class="import-toolbar"><button id="add-files" class="button button-ink"><svg><use href="#i-plus"/></svg>添加视频</button><button id="add-folder" class="button square" aria-label="添加文件夹" title="添加文件夹"><svg><use href="#i-folder"/></svg></button></div>
+    <div class="library-tools"><label class="select-all"><input id="select-all" type="checkbox"><span>全选</span></label><button id="remove-media" class="text-button" disabled>移出列表</button></div>
+    <div id="media-list" class="media-list"><div class="library-empty"><svg><use href="#i-film"/></svg><p>还没有素材</p><span>支持 MP4 / MOV / M4V<br>可批量选择，也可拖入</span></div></div>
+    <div id="media-pages" class="pager" hidden><button id="media-prev" type="button" aria-label="上一页素材">‹</button><span id="media-page-label"></span><button id="media-next" type="button" aria-label="下一页素材">›</button></div><div class="library-foot"><span class="small-dot"></span>直接读取原片 · 本机处理</div>
+  </aside>
+
+  <section class="workspace">
+    <div class="preview-heading"><div class="preview-title"><span class="eyebrow">VIEWER</span><h2 id="focus-name">画面预览</h2></div><div class="view-switch" role="group" aria-label="预览模式"><button id="view-compare" class="active" aria-pressed="true"><svg><use href="#i-compare"/></svg>对比</button><button id="view-after" aria-pressed="false">处理后</button></div></div>
+    <div id="viewer" class="viewer">
+      <div class="frame-corner tl"></div><div class="frame-corner tr"></div><div class="frame-corner bl"></div><div class="frame-corner br"></div>
+      <div id="viewer-empty" class="viewer-empty"><span class="empty-frame"><svg><use href="#i-film"/></svg></span><h2>从一段影像开始</h2><p>添加视频，在这里预览色彩还原</p><button id="viewer-add" class="button button-paper"><svg><use href="#i-plus"/></svg>选择本地视频</button><span class="empty-format">OSMO ACTION 4 <i>·</i> D-LOG M</span></div>
+      <img id="after-image" class="preview-image" alt="色彩处理后的预览" hidden>
+      <img id="before-image" class="preview-image before-image" alt="原始素材预览" hidden>
+      <div id="compare-divider" class="compare-divider" hidden><span><svg><use href="#i-compare"/></svg></span></div>
+      <input id="compare-slider" class="compare-slider" type="range" min="0" max="100" value="50" aria-label="拖动对比原片与处理后画面" hidden>
+      <span id="before-label" class="image-label before-label" hidden>原片</span><span id="after-label" class="image-label after-label" hidden>Rec.709</span>
+      <span id="frame-time" class="frame-time" hidden>00:00.0</span>
+      <div id="preview-loading" class="preview-loading" hidden><span class="spinner"></span><span>正在生成预览</span></div>
+      <div id="preview-error" class="preview-error" hidden><span>暂时无法预览此画面</span><button id="retry-preview" class="button button-paper">重新生成</button></div>
+    </div>
+    <div class="viewer-controls"><span id="current-time" class="time-code">00:00.0</span><input id="seek" type="range" min="0" max="1" step="0.1" value="0" aria-label="预览时间点" disabled><span id="duration-time" class="time-code">00:00.0</span></div>
+    <div class="viewer-meta"><span id="source-meta">选择素材后显示画面信息</span><span id="preview-note">帧预览 · 拖动分割线对比</span></div>
+
+
+  </section>
+
+  <aside class="inspector panel">
+    <div class="panel-heading"><h2>色彩与导出</h2><span id="apply-count" class="subtle">未选素材</span></div>
+    <div class="inspector-body">
+      <section class="control-section"><div class="section-label"><label for="profile">输入色彩</label><span class="mini-label">SOURCE</span></div><select id="profile"><option value="dlogm">DJI D-Log M</option><option value="rec709">标准 Rec.709（无需还原）</option></select><p id="pipeline-note" class="control-note">先完整还原，再叠加风格滤镜</p></section>
+      <section class="control-section looks-section"><div class="section-label"><span>选择滤镜</span><button id="import-lut" class="text-button accent">＋ 导入 LUT</button></div><div id="looks-grid" class="looks-grid"></div><button id="restore-looks" class="text-button restore-looks" hidden>恢复已移除的滤镜</button><p id="look-description" class="control-note">大疆官方技术 LUT，准确还原色彩</p></section>
+      <section class="control-section strength-section"><div class="section-label"><label for="strength">风格强度</label><button id="reset-strength" class="text-button mono">100%</button></div><input id="strength" type="range" min="0" max="100" value="100"><p id="strength-note" class="control-note">技术还原始终以 100% 应用</p></section>
+      <section class="control-section enhancement-section"><div class="section-label"><label class="enhance-toggle"><input id="enhance-enabled" type="checkbox">叠加二次增强</label><span id="enhance-value" class="mono subtle">100%</span></div><input id="enhance-strength" type="range" min="0" max="100" value="100" aria-label="二次增强强度" disabled><p id="enhance-note" class="control-note">增强跟随当前 LUT，强度独立调节，建议先预览。</p></section>
+      <section class="control-section export-section"><div class="section-label"><label for="encoder">导出格式</label><span class="mini-label">OUTPUT</span></div><select id="encoder"><option value="auto">自动 · 显卡优先 · 推荐</option><option value="hevc">CPU H.265 · 10-bit</option><option value="h264">H.264 · 8-bit · 易于播放</option><option value="nvenc">NVIDIA H.265 · 10-bit · 加速</option></select><div class="quality-line"><label for="fps">帧率</label><select id="fps"><option value="source">保持原帧率 · 推荐</option><option value="24">24 fps</option><option value="25">25 fps</option><option value="30">30 fps</option><option value="50">50 fps</option><option value="60">60 fps</option><option value="120">120 fps</option></select></div><p id="fps-note" class="control-note">保持原片帧率与播放速度。</p><div class="quality-line"><label for="rate-mode">码率</label><select id="rate-mode"><option value="source">接近原片 · 推荐</option><option value="quality">自动码率 · 更省空间</option></select></div><div id="quality-options" class="quality-line" hidden><label for="quality">画质</label><select id="quality"><option value="16">精细 · 文件较大</option><option value="18" selected>高质量 · 推荐</option><option value="22">均衡 · 文件较小</option><option value="26">轻量 · 快速分享</option></select></div><p id="encode-note" class="control-note">保留原分辨率、帧率与声音</p><p id="encoder-warning" class="control-note encoder-warning" hidden></p></section>
+      <section class="control-section output-section"><div class="section-label"><span>保存位置</span><span id="output-state" class="output-state">未选择</span></div><button id="choose-output" class="browser-output-picker" aria-label="选择保存文件夹"><svg><use href="#i-folder"/></svg><span id="output-name">选择文件夹</span><span class="picker-change">选择</span></button><p id="output-note" class="control-note">完成后自动保存到所选目录；保存时请保持页面打开。</p><button id="reveal-output" class="text-button reveal-link">查看处理结果 <span>↗</span></button></section>
+      <details class="advanced"><summary>更多选项<svg><use href="#i-chevron"/></svg></summary><label for="input-range">原片色彩范围</label><select id="input-range"><option value="auto">自动读取标签</option><option value="full">Full · 完整范围</option><option value="limited">Limited · 视频范围</option></select><label class="check-line"><input id="audio-aac" type="checkbox">音频转为 AAC 192k</label><p class="control-note">默认直接复制音轨；原音轨无法封装时再开启。</p></details>
+    </div>
+  </aside>
+</main>
+
+<footer class="export-bar"><div class="selection-summary"><span class="selection-icon"><svg><use href="#i-check"/></svg></span><div><strong id="selection-title">等待选择素材</strong><span id="selection-detail">勾选后可批量应用同一滤镜</span></div></div><div id="background-status" class="background-status"><span class="small-dot"></span><span>原片保留，处理结果另存</span></div><div class="export-actions"><button id="preview-export" class="button button-light" disabled>8 秒试片</button><button id="start-export" class="button button-accent" disabled><span>开始处理</span><svg><use href="#i-arrow"/></svg></button></div></footer>
+
+<dialog id="queue-dialog" class="queue-dialog"><form method="dialog"><div class="dialog-heading"><h2>处理队列 <span id="queue-count" class="count">0</span></h2><button class="icon-button" aria-label="收起处理队列"><svg><use href="#i-close"/></svg></button></div><div class="queue-dialog-tools"><span id="queue-status">任务会在后台继续处理</span><div class="queue-actions"><button id="pause-queue" type="button" class="button button-light" aria-pressed="false" disabled>全部暂停</button><button id="cancel-queue" type="button" class="button button-light danger" disabled>全部取消</button><button id="clear-jobs" type="button" class="text-button" disabled>清除已结束</button></div></div><p id="queue-flow" class="flow-message" hidden></p><div id="queue-summary" class="queue-summary" hidden><div><span id="queue-description">后台处理中</span><span id="queue-percent" class="mono">0%</span></div><div class="progress-track"><span id="queue-progress"></span></div></div><div id="job-list" class="job-list"><div class="queue-empty"><svg><use href="#i-clock"/></svg><div><p>暂无处理任务</p><span>开始处理后，可在这里查看进度与结果</span></div></div></div><div id="queue-pages" class="pager queue-pager" hidden><button id="queue-prev" type="button" aria-label="上一页任务">‹</button><span id="queue-page-label"></span><button id="queue-next" type="button" aria-label="下一页任务">›</button></div><div class="dialog-actions"><button class="button button-ink">收起面板</button></div></form></dialog>
+<dialog id="path-dialog"><form method="dialog"><div class="dialog-heading"><h2>导入本地素材</h2><button class="icon-button" aria-label="关闭"><svg><use href="#i-close"/></svg></button></div><p>粘贴视频或文件夹路径，每行一个。文件夹会包含子目录。</p><textarea id="path-input" placeholder="例如 E:\旅行视频" rows="4" aria-label="视频或文件夹路径"></textarea><button id="browser-pick" type="button" class="text-button accent browser-pick">使用浏览器多选视频 <span>↗</span></button><p class="control-note">路径导入直接引用原片；浏览器选择会建立本地副本。</p><div class="dialog-actions"><button class="button button-light">取消</button><button id="submit-path" type="button" class="button button-accent">添加到素材库</button></div></form></dialog>
+<dialog id="results-dialog"><form method="dialog"><div class="dialog-heading"><h2>处理结果</h2><button class="icon-button" aria-label="关闭"><svg><use href="#i-close"/></svg></button></div><p id="results-reason">完成后的成片可在这里下载。</p><div id="output-files" class="output-files"></div><div class="dialog-actions"><button class="button button-ink">完成</button></div></form></dialog>
+<dialog id="lut-dialog"><form method="dialog"><div class="dialog-heading"><h2>导入自定义 LUT</h2><button class="icon-button" aria-label="关闭"><svg><use href="#i-close"/></svg></button></div><p>支持 2–65 网格的纯 3D <span class="mono">.cube</span> 文件。</p><label class="field-label" for="lut-file">LUT 文件（可多选）</label><input id="lut-file" type="file" accept=".cube" multiple><label class="field-label" for="lut-stage">LUT 用途</label><select id="lut-stage"><option value="creative">风格 LUT · 在色彩还原后叠加</option><option value="technical">技术 LUT · 替代官方色彩还原</option></select><p class="control-note">技术 LUT 请与素材的机型和 Log 格式匹配。</p><div class="dialog-actions"><button class="button button-light">取消</button><button id="submit-lut" type="button" class="button button-accent">导入滤镜</button></div></form></dialog>
+<dialog id="help-dialog"><form method="dialog"><div class="dialog-heading"><h2>三步，完成色彩还原</h2><button class="icon-button" aria-label="关闭"><svg><use href="#i-close"/></svg></button></div><ol class="help-steps"><li><strong>添加并勾选视频</strong><p>文件选择支持多选；添加文件夹可递归导入。只引用本机原片，不上传到网络。</p></li><li><strong>选择滤镜，预览对比</strong><p>滤镜会应用到所有已勾选素材。拖动分割线对比，也可拖动时间条检查其他画面。</p></li><li><strong>先试片，再批量处理</strong><p>8 秒试片采用相同的导出设置。后台任务可取消或重试，关闭网页后转码仍继续，重新打开网页后继续保存成片。</p></li></ol><div class="help-note">拖入文件使用浏览器本地传输，会在工作台目录建立副本。大文件建议点击“添加视频”直接读取。技术还原、风格调整及重新编码均在本机完成。</div><div class="dialog-actions"><button class="button button-ink">知道了</button></div></form></dialog>
+<dialog id="settings-dialog"><form method="dialog"><div class="dialog-heading"><h2>工作台设置</h2><button class="icon-button" aria-label="关闭"><svg><use href="#i-close"/></svg></button></div><p>本地服务只监听 <span class="mono">127.0.0.1</span>。刷新页面可恢复素材与队列。</p><div class="settings-info"><span>版本</span><span>1.11</span><span>处理引擎</span><span id="settings-engine">FFmpeg · CPU / NVIDIA</span><span>原片处理</span><span>仅引用，另存结果</span></div><p class="control-note">退出服务会中止当前任务；已完成的结果保留。下次双击启动入口可重新打开工作台。</p><div class="dialog-actions"><button id="shutdown" type="button" class="button button-light">退出本地服务</button><button class="button button-ink">完成</button></div></form></dialog>
+
+<div id="drop-overlay" class="drop-overlay" hidden><div><svg><use href="#i-film"/></svg><h2>松开，添加这些视频</h2><p>仅传输到本机工作台，不上传到网络</p><span>大文件可用「添加视频」直接引用原片</span></div></div>
+<div id="import-status" class="import-status" hidden><div><span id="import-label">正在导入</span><span id="import-percent" class="mono">0%</span></div><div class="progress-track"><span id="import-progress"></span></div></div>
+<div id="toast" role="status" class="toast" hidden></div>
+<input id="fallback-files" type="file" accept=".mp4,.mov,.m4v,video/*" multiple hidden>
+</body></html>

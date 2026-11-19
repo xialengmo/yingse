@@ -2,7 +2,8 @@
 
 映色是一款面向大疆相机视频的本地色彩处理工具。通过浏览器批量导入素材、预览并应用 LUT，在本机使用 FFmpeg 导出视频；支持自定义 LUT、帧率选择、NVIDIA 硬件编码，以及队列暂停、继续和取消。项目以 DJI Osmo Action 4 的 D-Log M → Rec.709 色彩还原为示例和已验证场景；其他大疆机型请根据相机型号和拍摄色彩模式选择匹配的 LUT，不能假设 Action 4 的还原 LUT 适用于所有机型。
 效果如下：
-<img width="2560" height="1279" alt="image" src="https://github.com/user-attachments/assets/b0f53da9-e8d7-4418-a913-901fecec7f44" />
+<img width="2560" height="1279" alt="0316f1a1-1ea8-44d0-b151-219c0592a389" src="https://github.com/user-attachments/assets/f50527c5-fd1e-4655-9535-9ed25afa229f" />
+
 
 
 
